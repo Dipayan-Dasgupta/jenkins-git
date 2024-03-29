@@ -1,0 +1,25 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: CREDITCARD-SERVICE
+          uri: lb://CREDITCARD-SERVICE/transaction/
+          predicates:
+            - Path=/transaction/**
+        - id: MERCHANT-SERVICE
+          uri: lb://MERCHANT-SERVICE/marchant/
+          predicates:
+            - Path=/marchant/**
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
